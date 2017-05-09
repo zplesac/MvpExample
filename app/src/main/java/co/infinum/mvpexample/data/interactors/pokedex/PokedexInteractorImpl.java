@@ -30,7 +30,7 @@ public class PokedexInteractorImpl implements PokedexInteractor {
     }
 
     @Override
-    public void getPokemons(PokedexListener listener) {
+    public void getPokemons(final PokedexListener listener) {
         reset();
         call = apiService.getPokedex();
         call.enqueue(new Callback<PokemonListResponse>() {

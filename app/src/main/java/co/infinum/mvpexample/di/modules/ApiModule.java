@@ -1,7 +1,5 @@
 package co.infinum.mvpexample.di.modules;
 
-import com.squareup.moshi.Moshi;
-
 import javax.inject.Singleton;
 
 import co.infinum.mvpexample.BuildConfig;
@@ -22,7 +20,12 @@ public class ApiModule {
     @Provides
     @Singleton
     public HttpLoggingInterceptor provideInterceptor() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> Timber.tag("Retrofit").d(message));
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Timber.tag("Retrofit").d(message);
+            }
+        });
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         return loggingInterceptor;

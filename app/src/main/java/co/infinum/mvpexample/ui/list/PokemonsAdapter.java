@@ -19,7 +19,7 @@ import co.infinum.mvpexample.data.models.Pokemon;
 public class PokemonsAdapter extends MjolnirRecyclerAdapter<Pokemon> {
 
     public PokemonsAdapter(Context context) {
-        super(context, Collections.emptyList());
+        super(context, Collections.<Pokemon>emptyList());
     }
 
     @Override
@@ -45,9 +45,14 @@ public class PokemonsAdapter extends MjolnirRecyclerAdapter<Pokemon> {
         }
 
         @Override
-        protected void bind(Pokemon item, int position, List<Object> payloads) {
+        protected void bind(final Pokemon item, final int position, List<Object> payloads) {
             titleTextView.setText(item.getName());
-            rootView.setOnClickListener(v -> listener.onClick(position, item));
+            rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(position, item);
+                }
+            });
         }
     }
 }

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.infinum.mjolnirrecyclerview.MjolnirRecyclerAdapter;
 import co.infinum.mjolnirrecyclerview.MjolnirRecyclerView;
 import co.infinum.mvpexample.R;
 import co.infinum.mvpexample.data.models.Pokemon;
@@ -46,7 +47,12 @@ public class PokemonListActivity extends BaseActivity implements PokemonListMvp.
     @Override
     public void initUi() {
         adapter = new PokemonsAdapter(this);
-        adapter.setOnClickListener((index, item) -> presenter.onItemClicked(index, item));
+        adapter.setOnClickListener(new MjolnirRecyclerAdapter.OnClickListener<Pokemon>() {
+            @Override
+            public void onClick(int index, Pokemon item) {
+                presenter.onItemClicked(index, item);
+            }
+        });
 
         pokemonsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         pokemonsRecyclerView.setAdapter(adapter);
